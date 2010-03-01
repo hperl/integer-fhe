@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E40A518113C0284006A694C /* crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A517113C0284006A694C /* crypt.c */; };
+		4E40A51B113C0EBE006A694C /* evaluate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A51A113C0EBE006A694C /* evaluate.c */; };
 		4E963D3E1136D5BE009EA7B9 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; };
 		4EEFECC1113BE5500068C0FB /* keygen.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EEFECC0113BE5500068C0FB /* keygen.c */; };
 /* End PBXBuildFile section */
@@ -25,6 +27,11 @@
 
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		4E40A516113C0284006A694C /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		4E40A517113C0284006A694C /* crypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt.c; sourceTree = "<group>"; };
+		4E40A519113C0EBE006A694C /* evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evaluate.h; sourceTree = "<group>"; };
+		4E40A51A113C0EBE006A694C /* evaluate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evaluate.c; sourceTree = "<group>"; };
+		4E40A531113C1284006A694C /* fhe_algorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fhe_algorithm.h; sourceTree = "<group>"; };
 		4EEFECBF113BE5500068C0FB /* keygen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keygen.h; sourceTree = "<group>"; };
 		4EEFECC0113BE5500068C0FB /* keygen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keygen.c; sourceTree = "<group>"; };
 		4EEFECC2113BE57C0068C0FB /* definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
@@ -56,6 +63,11 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4E40A531113C1284006A694C /* fhe_algorithm.h */,
+				4E40A519113C0EBE006A694C /* evaluate.h */,
+				4E40A51A113C0EBE006A694C /* evaluate.c */,
+				4E40A516113C0284006A694C /* crypt.h */,
+				4E40A517113C0284006A694C /* crypt.c */,
 				4EEFECC2113BE57C0068C0FB /* definitions.h */,
 				08FB7796FE84155DC02AAC07 /* main.c */,
 				4EEFECBF113BE5500068C0FB /* keygen.h */,
@@ -125,6 +137,8 @@
 			files = (
 				4E963D3E1136D5BE009EA7B9 /* main.c in Sources */,
 				4EEFECC1113BE5500068C0FB /* keygen.c in Sources */,
+				4E40A518113C0284006A694C /* crypt.c in Sources */,
+				4E40A51B113C0EBE006A694C /* evaluate.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,16 +11,16 @@
 
 #include <time.h>
 #include <gmp.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "definitions.h"
 
-void genP(mpz_t p, gmp_randstate_t* randstate);
+/** private methods **/
+void genSK(mpz_t p, gmp_randstate_t* randstate);
 void genQ(mpz_t q[], mpz_t p, gmp_randstate_t* randstate);
-int keyGen(int lambda);
-void genR(mpz_t r[]);
+void genR(mpz_t r[], gmp_randstate_t* randstate);
+void genPK(mpz_t x[], mpz_t p, mpz_t q[], mpz_t r[], gmp_randstate_t* randstate);
 
-extern int keyGen(int lambda);
+extern int fhe_keygen(mpz_t pk[], mpz_t sk, int lambda);
 
 #endif
