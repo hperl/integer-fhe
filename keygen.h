@@ -22,5 +22,6 @@ void genR(mpz_t r[], gmp_randstate_t* randstate);
 void genPK(mpz_t x[], mpz_t p, mpz_t q[], mpz_t r[], gmp_randstate_t* randstate);
 
 extern int fhe_keygen(mpz_t pk[], mpz_t sk, int lambda);
+extern void fhe_mod(mpz_t rop, mpz_t n, mpz_t d);
 
 #endif

@@ -16,6 +16,6 @@
 #include "definitions.h"
 
 extern void fhe_encrypt(mpz_t c, mpz_t pk[], int m);
-extern void fhe_decrypt(int m, mpz_t sk, mpz_t c);
+extern void fhe_decrypt(int* m, mpz_t sk, mpz_t c);
 
 #endif

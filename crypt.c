@@ -39,8 +39,8 @@ void fhe_encrypt(mpz_t c, mpz_t pk[], int m)
 	}
 }
 
-void fhe_decrypt(int m, mpz_t sk, mpz_t c)
+void fhe_decrypt(int* m, mpz_t sk, mpz_t c)
 {
 	mpz_mod(c, c, sk);
-	m = (mpz_get_si(c) % 2);
+	*m = (mpz_get_si(c) % 2);
 }

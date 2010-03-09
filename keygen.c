@@ -7,7 +7,7 @@
  */
 
 #include "keygen.h"
-
+#include "stdio.h"
 
 
 void die(char *str)
@@ -106,6 +106,7 @@ void genQ(mpz_t q[], mpz_t p, gmp_randstate_t* randstate)
 	
 	// cleanup
 	mpz_clear(q_range);
+	mpz_clear(temp);
 }
 
 void genR(mpz_t r[], gmp_randstate_t* randstate)
@@ -142,10 +143,38 @@ void genPK(mpz_t x[], mpz_t p, mpz_t q[], mpz_t r[], gmp_randstate_t* randstate)
 	// special case x[0]
 	mpz_add(x[0], q[0], r[0]);
 	
-	
 	for (i=1; i<TAU; i++) {
 		mpz_add(temp, q[i], r[i]);
-		// fixme: no negative numbers!
-		mpz_mod(x[i], temp, x[0]); 
+		fhe_mod(x[i], temp, x[0]);
 	}
+	
+	mpz_clear(temp);
+}
+
+void fhe_mod(mpz_t rop, mpz_t n, mpz_t d)
+{
+	mpf_t q;
+	mpf_init(q);
+	mpf_t f_n;
+	mpf_init(f_n);
+	mpf_set_z(f_n, n);
+	mpf_t f_d;
+	mpf_init(f_d);
+	mpf_set_z(f_d, d);
+	
+	// q = round(n/d)
+	mpf_div(q, f_n, f_d);
+	mpf_add_ui(q, q, 0.5);
+	mpf_ceil(q, q);
+	mpz_set_f(rop, q);
+	
+	// rop = n - q*d
+	mpz_mul(rop, rop, d);
+	mpz_sub(rop, n, rop);
+	
+	gmp_printf("%Zd mod %Zd = %Zd\n", n, d, rop);
+	
+	mpf_clear(f_n);
+	mpf_clear(f_d);
+	mpf_clear(q);
 }

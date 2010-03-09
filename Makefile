@@ -1,4 +1,4 @@
-CC       = 'gcc -arch i386'
+CC       = gcc
 CFLAGS   = -Wall -Werror -g3 -ggdb -I/opt/local/include
 LDFLAGS += -L/opt/local/lib -lgmp
 SOURCE   = $(shell find * -name '*.c')
