@@ -1,0 +1,210 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      7251,        201]
+NotebookOptionsPosition[      6793,        180]
+NotebookOutlinePosition[      7154,        196]
+CellTagsIndexPosition[      7111,        193]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"n", "=", "4"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ETA", "=", 
+   SuperscriptBox["2", 
+    SqrtBox["n"]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "x_", "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", "1"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"p", "=", "4"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"While", "[", 
+  RowBox[{
+   RowBox[{"!", 
+    RowBox[{"PrimeQ", "[", "p", "]"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"S", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"2", "#"}], ")"}], "&"}], "/@", 
+      RowBox[{"RandomInteger", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", 
+           FractionBox["ETA", "2"]}], ",", 
+          FractionBox["ETA", "2"]}], "}"}], ",", "n"}], "]"}]}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"S", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "+=", "1"}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"g", "[", "x_", "]"}], ":=", 
+     RowBox[{"Sum", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"MapIndexed", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"#1", " ", 
+            SuperscriptBox["x", 
+             RowBox[{
+              RowBox[{"First", "[", "#2", "]"}], "-", "1"}]]}], "&"}], ",", 
+          "S"}], "]"}], "[", 
+        RowBox[{"[", "i", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "n"}], "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"p", "=", 
+     RowBox[{"Resultant", "[", 
+      RowBox[{
+       RowBox[{"g", "[", "x", "]"}], ",", 
+       RowBox[{"f", "[", "x", "]"}], ",", "x"}], "]"}]}], ";"}]}], 
+  "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  InterpretationBox[
+   RowBox[{"\"\<p: \>\"", "\[InvisibleSpace]", "13"}],
+   SequenceForm["p: ", 13],
+   Editable->False], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<G: \>\"", ",", 
+    RowBox[{"Factor", "[", 
+     RowBox[{"g", "[", "x", "]"}], "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<F: \>\"", ",", 
+    RowBox[{"Factor", "[", 
+     RowBox[{"f", "[", "x", "]"}], "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d", "[", "x_", "]"}], ":=", 
+   RowBox[{"PolynomialGCD", "[", 
+    RowBox[{
+     RowBox[{"g", "[", "x", "]"}], ",", 
+     RowBox[{"f", "[", "x", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Alpha]", "=", 
+   RowBox[{"Root", "[", 
+    RowBox[{
+     RowBox[{"d", "[", "x", "]"}], ",", "1"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.477736880882291*^9, 3.4777372242957573`*^9}, {
+   3.477737550636429*^9, 3.477737555752627*^9}, {3.477737618009103*^9, 
+   3.47773762514986*^9}, {3.477738141717492*^9, 3.4777381956553926`*^9}, {
+   3.477738332702284*^9, 3.477738407599428*^9}, {3.477738641121756*^9, 
+   3.477738641958028*^9}, {3.4777387421082783`*^9, 3.47773874732323*^9}, {
+   3.47773886453446*^9, 3.477738901821496*^9}, {3.4777389429212513`*^9, 
+   3.477738959955579*^9}, {3.4777391132642317`*^9, 3.477739290623144*^9}, {
+   3.477739396516608*^9, 3.477739470838254*^9}, {3.47773952536689*^9, 
+   3.47773957269005*^9}, {3.477739627122409*^9, 3.477739644015315*^9}, {
+   3.477739674018564*^9, 3.477739674264288*^9}, {3.4777403970409403`*^9, 
+   3.477740432210644*^9}, {3.477740609558*^9, 3.477740618129189*^9}, {
+   3.4777407797059917`*^9, 3.477740819405505*^9}, {3.477740857157709*^9, 
+   3.4777408572430573`*^9}, {3.477740898765153*^9, 3.477740926121706*^9}, 
+   3.477741005527701*^9, 3.477741082970883*^9, {3.4777411390338593`*^9, 
+   3.47774115958355*^9}, {3.4777413532758007`*^9, 3.477741401855802*^9}, {
+   3.4777414408518133`*^9, 3.477741533570998*^9}, {3.477741572919346*^9, 
+   3.477741586296837*^9}, {3.4777418594277*^9, 3.477741874093858*^9}, {
+   3.47774192953325*^9, 3.477741944367091*^9}, {3.477742019757028*^9, 
+   3.4777421200857*^9}, {3.477742201939052*^9, 3.477742288032065*^9}, {
+   3.477742343430893*^9, 3.477742414731903*^9}, {3.477742462009001*^9, 
+   3.477742524869349*^9}, {3.477742571723248*^9, 3.477742675391062*^9}, {
+   3.477742939601541*^9, 3.477742958065662*^9}, 3.477743050499736*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"G: \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1"}], "+", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["x", "3"]}]}]}],
+  SequenceForm["G: ", -1 + 2 $CellContext`x^2 - 2 $CellContext`x^3],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.477742469957467*^9, {3.477742502298871*^9, 3.4777425433562183`*^9}, {
+   3.4777426069865913`*^9, 3.477742679750263*^9}, {3.477742856850608*^9, 
+   3.477742872495645*^9}, 3.477742919362688*^9, 3.4777430592965*^9, {
+   3.477743269507032*^9, 3.4777433095775747`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"F: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"1", "+", 
+    SuperscriptBox["x", "2"]}]}],
+  SequenceForm["F: ", 1 + $CellContext`x^2],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.477742469957467*^9, {3.477742502298871*^9, 3.4777425433562183`*^9}, {
+   3.4777426069865913`*^9, 3.477742679750263*^9}, {3.477742856850608*^9, 
+   3.477742872495645*^9}, 3.477742919362688*^9, 3.4777430592965*^9, {
+   3.477743269507032*^9, 3.477743309578979*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Root", "::", "\<\"nup\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is not a univariate \
+polynomial.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Root/nup\\\", ButtonNote -> \
+\\\"Root::nup\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.47774253883937*^9, 3.477742543357629*^9}, {
+   3.477742606990741*^9, 3.477742679785161*^9}, {3.477742856854309*^9, 
+   3.4777428725002337`*^9}, 3.477742919366611*^9, 3.477743059299357*^9, {
+   3.477743269510468*^9, 3.477743309580461*^9}}]
+}, Open  ]]
+},
+WindowToolbars->{},
+WindowSize->{640, 750},
+WindowMargins->{{37, Automatic}, {132, Automatic}},
+FrontEndVersion->"7.0 for Mac OS X x86 (32-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 4313, 107, 298, "Input"],
+Cell[CellGroupData[{
+Cell[4905, 133, 632, 15, 23, "Print"],
+Cell[5540, 150, 498, 11, 23, "Print"]
+}, Open  ]],
+Cell[6053, 164, 724, 13, 23, "Message"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
