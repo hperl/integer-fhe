@@ -34,7 +34,6 @@
 		4E40A531113C1284006A694C /* fhe_algorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fhe_algorithm.h; sourceTree = "<group>"; };
 		4EEFECBF113BE5500068C0FB /* keygen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keygen.h; sourceTree = "<group>"; };
 		4EEFECC0113BE5500068C0FB /* keygen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keygen.c; sourceTree = "<group>"; };
-		4EEFECC2113BE57C0068C0FB /* definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
 		8DD76FB20486AB0100D96B5E /* integer-fhe2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "integer-fhe2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A0FF2C0290799A04C91782 /* integer-fhe2.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "integer-fhe2.1"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,7 +67,6 @@
 				4E40A51A113C0EBE006A694C /* evaluate.c */,
 				4E40A516113C0284006A694C /* crypt.h */,
 				4E40A517113C0284006A694C /* crypt.c */,
-				4EEFECC2113BE57C0068C0FB /* definitions.h */,
 				08FB7796FE84155DC02AAC07 /* main.c */,
 				4EEFECBF113BE5500068C0FB /* keygen.h */,
 				4EEFECC0113BE5500068C0FB /* keygen.c */,
@@ -120,7 +118,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "integer-fhe" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* integer-fhe2 */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -154,11 +159,15 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = "/opt/local/include/**";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = /opt/local/include;
 				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = "/opt/local/lib/**";
-				OTHER_LDFLAGS = "-lgmp";
+				LD_RUNPATH_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				OTHER_LDFLAGS = (
+					"-lflint",
+					"-lgmp",
+				);
 				PRODUCT_NAME = "integer-fhe2";
 			};
 			name = Debug;
@@ -169,7 +178,15 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = /opt/local/include;
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				OTHER_LDFLAGS = (
+					"-lflint",
+					"-lgmp",
+				);
 				PRODUCT_NAME = "integer-fhe2";
 			};
 			name = Release;
@@ -179,7 +196,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -195,6 +214,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = /usr/lib;
+				OTHER_LDFLAGS = (
+					"-lflint",
+					"-lgmp",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};

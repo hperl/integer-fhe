@@ -13,15 +13,18 @@
 #include <gmp.h>
 #include <stdlib.h>
 
-#include "definitions.h"
+/** type defs **/
+typedef struct {
+	mpz_t p, alpha, s1, s2, SK, H;
+} fhe_pk_t;
+
+typedef struct {
+	mpz_t p, b;
+} fhe_sk_t;
+
+extern int fhe_keygen(fhe_pk_t pk, fhe_sk_t sk);
 
 /** private methods **/
-void genSK(mpz_t p, gmp_randstate_t* randstate);
-void genQ(mpz_t q[], mpz_t p, gmp_randstate_t* randstate);
-void genR(mpz_t r[], gmp_randstate_t* randstate);
-void genPK(mpz_t x[], mpz_t p, mpz_t q[], mpz_t r[], gmp_randstate_t* randstate);
 
-extern int fhe_keygen(mpz_t pk[], mpz_t sk, int lambda);
-extern void fhe_mod(mpz_t rop, mpz_t n, mpz_t d);
 
 #endif
