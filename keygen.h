@@ -16,15 +16,33 @@
 /** type defs **/
 typedef struct {
 	mpz_t p, alpha, s1, s2, SK, H;
-} fhe_pk_t;
+} _fhe_pk;
+typedef _fhe_pk fhe_pk_t[1];
 
 typedef struct {
-	mpz_t p, b;
-} fhe_sk_t;
+	mpz_t p, B;
+} _fhe_sk;
+typedef _fhe_sk fhe_sk_t[1];
 
-extern int fhe_keygen(fhe_pk_t pk, fhe_sk_t sk);
+/** main function **/
 
-/** private methods **/
+int fhe_keygen(fhe_pk_t pk, fhe_sk_t sk);
 
+
+/** memory management **/
+
+void fhe_pk_init(fhe_pk_t pk);
+
+void fhe_pk_clear(fhe_pk_t pk);
+
+void fhe_sk_init(fhe_sk_t sk);
+
+void fhe_sk_clear(fhe_sk_t sk);
+
+/** output **/
+
+void fhe_pk_print(fhe_pk_t pk);
+
+void fhe_sk_print(fhe_sk_t sk);
 
 #endif

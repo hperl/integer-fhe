@@ -13,7 +13,7 @@
 #include <gmp.h>
 #include <stdlib.h>
 
-extern void fhe_encrypt(mpz_t c, mpz_t pk[], int m);
-extern void fhe_decrypt(int* m, mpz_t sk, mpz_t c);
+void fhe_encrypt(mpz_t c, fhe_pk_t pk, short m);
+void fhe_decrypt(short m, fhe_sk_t sk, mpz_t c);
 
 #endif

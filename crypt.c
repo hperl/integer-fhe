@@ -8,12 +8,10 @@
 
 #include "crypt.h"
 
-void fhe_encrypt(mpz_t c, mpz_t pk[], int m)
+void fhe_encrypt(mpz_t c, fhe_pk_t pk, short m)
 {
-	// TODO: Stub
+	
 }
 
-void fhe_decrypt(int* m, mpz_t sk, mpz_t c)
-{
-	// TODO: Stub
-}
+
+void fhe_decrypt(short m, fhe_sk_t sk, mpz_t c);
