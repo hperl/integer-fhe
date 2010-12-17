@@ -2,15 +2,14 @@
  *  parameters.h
  *  integer-fhe
  *
- *  Created by Henning Perl on 01.03.10.
+ *  Created by Henning Perl on 25.11.10.
+ *  Copyright 2010 Henning Perl. All rights reserved.
  *
  */
 
-#ifndef PARAMETERS_H
-#define PARAMETERS_H
+#pragma once
 
-#define N 8;
-#define NU 2<<256;
-#define MU 4;
-
-#endif
+#define N 8
+#define MU 4
+//#define NU 2**256;
+#define LOG_NU 256

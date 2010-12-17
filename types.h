@@ -1,17 +1,16 @@
 /*
- *  keygen.h
+ *  types.h
  *  integer-fhe
  *
- *  Created by Henning Perl on 01.03.10.
+ *  Created by Henning Perl on 25.11.10.
+ *  Copyright 2010 Henning Perl. All rights reserved.
  *
  */
 
-#ifndef KEYGEN_H_
-#define KEYGEN_H_
+#pragma once
 
-#include <time.h>
+#include <stdio.h>
 #include <gmp.h>
-#include <stdlib.h>
 
 /** type defs **/
 typedef struct {
@@ -23,11 +22,6 @@ typedef struct {
 	mpz_t p, B;
 } _fhe_sk;
 typedef _fhe_sk fhe_sk_t[1];
-
-/** main function **/
-
-int fhe_keygen(fhe_pk_t pk, fhe_sk_t sk);
-
 
 /** memory management **/
 
@@ -44,5 +38,3 @@ void fhe_sk_clear(fhe_sk_t sk);
 void fhe_pk_print(fhe_pk_t pk);
 
 void fhe_sk_print(fhe_sk_t sk);
-
-#endif

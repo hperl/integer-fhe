@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E40A518113C0284006A694C /* crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A517113C0284006A694C /* crypt.c */; };
-		4E40A51B113C0EBE006A694C /* evaluate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A51A113C0EBE006A694C /* evaluate.c */; };
+		2E9CB87112BB6BE600AF5A6A /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E9CB87012BB6BE600AF5A6A /* test.c */; };
+		4E59EAEF129ECC7900361AF1 /* types.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E59EAEE129ECC7900361AF1 /* types.c */; };
+		4E83B22112A157170021A7FC /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E83B22012A157170021A7FC /* util.c */; };
 		4E963D3E1136D5BE009EA7B9 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; };
-		4EEFECC1113BE5500068C0FB /* keygen.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EEFECC0113BE5500068C0FB /* keygen.c */; };
+		4EEFECC1113BE5500068C0FB /* integer-fhe.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EEFECC0113BE5500068C0FB /* integer-fhe.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,13 +28,15 @@
 
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		4E40A516113C0284006A694C /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		4E40A517113C0284006A694C /* crypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt.c; sourceTree = "<group>"; };
-		4E40A519113C0EBE006A694C /* evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evaluate.h; sourceTree = "<group>"; };
-		4E40A51A113C0EBE006A694C /* evaluate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evaluate.c; sourceTree = "<group>"; };
-		4E40A531113C1284006A694C /* fhe_algorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fhe_algorithm.h; sourceTree = "<group>"; };
-		4EEFECBF113BE5500068C0FB /* keygen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keygen.h; sourceTree = "<group>"; };
-		4EEFECC0113BE5500068C0FB /* keygen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keygen.c; sourceTree = "<group>"; };
+		2E9CB86F12BB6BE600AF5A6A /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		2E9CB87012BB6BE600AF5A6A /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		4E59EAED129ECC7900361AF1 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		4E59EAEE129ECC7900361AF1 /* types.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = types.c; sourceTree = "<group>"; };
+		4E59EB30129ECE4200361AF1 /* parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parameters.h; sourceTree = "<group>"; };
+		4E83B21F12A157170021A7FC /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		4E83B22012A157170021A7FC /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
+		4EEFECBF113BE5500068C0FB /* integer-fhe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "integer-fhe.h"; sourceTree = "<group>"; };
+		4EEFECC0113BE5500068C0FB /* integer-fhe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "integer-fhe.c"; sourceTree = "<group>"; };
 		8DD76FB20486AB0100D96B5E /* integer-fhe2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "integer-fhe2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A0FF2C0290799A04C91782 /* integer-fhe2.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "integer-fhe2.1"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,14 +65,16 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4E40A531113C1284006A694C /* fhe_algorithm.h */,
-				4E40A519113C0EBE006A694C /* evaluate.h */,
-				4E40A51A113C0EBE006A694C /* evaluate.c */,
-				4E40A516113C0284006A694C /* crypt.h */,
-				4E40A517113C0284006A694C /* crypt.c */,
+				2E9CB86F12BB6BE600AF5A6A /* test.h */,
+				2E9CB87012BB6BE600AF5A6A /* test.c */,
+				4E59EAED129ECC7900361AF1 /* types.h */,
+				4E59EAEE129ECC7900361AF1 /* types.c */,
 				08FB7796FE84155DC02AAC07 /* main.c */,
-				4EEFECBF113BE5500068C0FB /* keygen.h */,
-				4EEFECC0113BE5500068C0FB /* keygen.c */,
+				4E83B21F12A157170021A7FC /* util.h */,
+				4E83B22012A157170021A7FC /* util.c */,
+				4EEFECBF113BE5500068C0FB /* integer-fhe.h */,
+				4EEFECC0113BE5500068C0FB /* integer-fhe.c */,
+				4E59EB30129ECE4200361AF1 /* parameters.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -141,9 +146,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E963D3E1136D5BE009EA7B9 /* main.c in Sources */,
-				4EEFECC1113BE5500068C0FB /* keygen.c in Sources */,
-				4E40A518113C0284006A694C /* crypt.c in Sources */,
-				4E40A51B113C0EBE006A694C /* evaluate.c in Sources */,
+				4EEFECC1113BE5500068C0FB /* integer-fhe.c in Sources */,
+				4E59EAEF129ECC7900361AF1 /* types.c in Sources */,
+				4E83B22112A157170021A7FC /* util.c in Sources */,
+				2E9CB87112BB6BE600AF5A6A /* test.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,12 +161,17 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_OPENMP_SUPPORT = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin10/4.2.1/include",
+					/usr/local/include,
+				);
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = /opt/local/lib;
 				LIBRARY_SEARCH_PATHS = "";
@@ -177,9 +188,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_OPENMP_SUPPORT = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin10/4.2.1/include",
+					/usr/local/include,
+				);
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = /opt/local/lib;
 				LIBRARY_SEARCH_PATHS = "";
