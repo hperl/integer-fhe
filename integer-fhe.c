@@ -12,8 +12,8 @@
 void
 fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 {
-	mpz_t p;
-	mpz_init(p);
+	mpz_t temp;
+	mpz_init(temp);
 	fmpz_t fmpz_p;
 	
 	fmpz_poly_t F;
@@ -35,12 +35,12 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 		// set p = resultant(G(x), F(x))
 		fmpz_p = fmpz_init(fmpz_poly_resultant_bound(G, F)/FLINT_BITS + 2);
 		fmpz_poly_resultant(fmpz_p, G, F);
-		fmpz_to_mpz(p, fmpz_p);
+		fmpz_to_mpz(temp, fmpz_p);
 		fmpz_clear(fmpz_p);
-	} while (!mpz_probab_prime_p(p, 10));
+	} while (!mpz_probab_prime_p(temp, 10));
 
 #ifdef DEBUG
-	gmp_printf("Choosing Prime p = %Zd\n", p);
+	gmp_printf("Choosing Prime p = %Zd\n", temp);
 	printf("Choosing F(x) = ");
 	fmpz_poly_print_pretty(F, "x");
 	printf("\n");
@@ -51,7 +51,7 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	
 	F_mpz_t P;
 	F_mpz_init(P);
-	F_mpz_set_mpz(P, p);
+	F_mpz_set_mpz(P, temp);
 	
 	F_mpz_mod_poly_t F_mod_p, G_mod_p, D_mod_p;
 	F_mpz_mod_poly_init(F_mod_p, P);
@@ -95,20 +95,88 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	fmpz_poly_print_pretty(Z, "x");
 	printf("\n");
 #endif
-	fmpz_p = fmpz_init(mpz_size(p));
-	mpz_to_fmpz(fmpz_p, p);
+	fmpz_p = fmpz_init(mpz_size(temp));
+	mpz_to_fmpz(fmpz_p, temp);
 	assert(fmpz_equal(fmpz_p, r));
 	
 	// build pk
-	mpz_set(pk->p, p);
+	mpz_set(pk->p, temp);
 	F_mpz_get_mpz(pk->alpha, *root);
 	// build sk
-	mpz_set(sk->p, p);
+	mpz_set(sk->p, temp);
 	fmpz_poly_get_coeff_mpz(sk->B, Z, 0);
-	mpz_mul_ui(p, p, 2);
-	mpz_mod(sk->B, sk->B, p);
+	mpz_mul_ui(temp, temp, 2);
+	mpz_mod(sk->B, sk->B, temp);
+	
+	// Build hint
+	mpz_t B_i, r_plus, r_minus;
+	mpz_init(B_i);
+	mpz_init(r_plus);
+	mpz_init(r_minus);
+	
+	mpz_fdiv_q_ui(B_i, sk->B, S2);
+	for (int i = 0; i < S2; i++) {
+		mpz_set(pk->B[i], B_i);
+		fhe_encrypt(pk->c[i], pk, 1);
+	}
+	mpz_add(pk->B[0], pk->B[0], sk->B);
+	mpz_submul_ui(pk->B[0], B_i, S2);
+	for (int i = S2; i < S1; i++) {
+		mpz_urandomm(B_i, randstate, temp); // p is already 2*pk->p !
+		mpz_sub(B_i, B_i, pk->p);
+		mpz_set(pk->B[i], B_i);
+		fhe_encrypt(pk->c[i], pk, 0);
+	}
+	
+	// add/sub values randomly
+	for (int i = 0; i < S2; i++) {
+		mpz_urandomm(r_plus, randstate, pk->p);
+		mpz_neg(r_minus, r_plus);
+		while (1) {
+			int j = rand() % S2;
+			mpz_add(pk->B[j], pk->B[j], r_plus);
+			if (mpz_cmp(pk->B[j], pk->p) > 0) {
+				mpz_sub(r_plus, pk->B[j], pk->p);
+				mpz_set(pk->B[j], pk->p);
+			} else {
+				break;
+			}
+		}
+		while (1) {
+			int j = rand() % S2;
+			mpz_add(pk->B[j], pk->B[j], r_minus);
+			mpz_neg(temp, pk->p);
+			if (mpz_cmp(pk->B[j], temp) < 0) {
+				mpz_add(r_minus, pk->B[j], pk->p);
+				mpz_neg(pk->B[j], pk->p);
+			} else {
+				break;
+			}
+		}
+	}
+	// shuffle
+	for (int i = 0; i < S1; i++) {
+		int j = rand() % S1;
+		mpz_swap(pk->B[i], pk->B[j]);
+		mpz_swap(pk->c[i], pk->c[j]);
+	}
+	
+#ifndef NDEBUG
+	// assert that it really sums up to B
+	mpz_set_ui(temp, 0L);
+	for (int i = 0; i < S1; i++) {
+		if (fhe_decrypt(sk, pk->c[i]) == 1) {
+			mpz_add(temp, temp, pk->B[i]);
+		}
+	}
+	assert(mpz_cmp(temp, sk->B) == 0);
+#endif
 
-	mpz_clear(p);
+	// cleanup
+	mpz_clear(R_i);
+	mpz_clear(r_plus);
+	mpz_clear(r_minus);
+	mpz_clear(temp);
 	fmpz_clear(fmpz_p);
 	fmpz_poly_clear(T);
 	fmpz_poly_clear(F);
@@ -236,4 +304,10 @@ fhe_mult(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk)
 {
 	mpz_mul(res, a, b);
 	mpz_mod(res, res, pk->p);
+}
+
+void
+fhe_recrypt(mpz_t c, fhe_pk_t pk)
+{
+	
 }

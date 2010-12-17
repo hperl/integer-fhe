@@ -8,13 +8,17 @@
  */
 
 #pragma once
+#ifndef TYPES_H
+#define TYPES_H
 
 #include <stdio.h>
 #include <gmp.h>
+#include "parameters.h"
 
 /** type defs **/
 typedef struct {
-	mpz_t p, alpha, s1, s2, SK, H;
+	mpz_t p, alpha;
+	mpz_t c[S1], B[S1];
 } _fhe_pk;
 typedef _fhe_pk fhe_pk_t[1];
 
@@ -38,3 +42,5 @@ void fhe_sk_clear(fhe_sk_t sk);
 void fhe_pk_print(fhe_pk_t pk);
 
 void fhe_sk_print(fhe_sk_t sk);
+
+#endif

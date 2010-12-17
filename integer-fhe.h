@@ -7,6 +7,8 @@
  */
 
 #pragma once
+#ifndef INTEGER_FHE_H
+#define INTEGER_FHE_H
 
 #include <gmp.h>
 #include <assert.h>
@@ -27,3 +29,5 @@ int  fhe_decrypt(fhe_sk_t sk, mpz_t c);
 void fhe_add(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk);
 
 void fhe_mult(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk);
+
+#endif

@@ -11,7 +11,7 @@
 
 void
 test_encryt_decrypt()
-{		
+{
 	for (int i = 0; i < RUNS; i++) {
 		int m0, m1;
 		mpz_t c0, c1;
@@ -42,4 +42,4 @@ test_encryt_decrypt()
 		fhe_sk_clear(sk);
 	}
 	printf(" PASSED.\n");
-	}
+}

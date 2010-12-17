@@ -16,10 +16,10 @@ void fhe_pk_init(fhe_pk_t pk)
 {
 	mpz_init(pk->p);
 	mpz_init(pk->alpha);
-	mpz_init(pk->s1);
-	mpz_init(pk->s2);
-	mpz_init(pk->SK);
-	mpz_init(pk->H);
+	for (int i = 0; i < S1; i++) {
+		mpz_init(pk->B[i]);
+		mpz_init(pk->c[i]);
+	}
 }
 
 
@@ -27,10 +27,10 @@ void fhe_pk_clear(fhe_pk_t pk)
 {
 	mpz_clear(pk->p);
 	mpz_clear(pk->alpha);
-	mpz_clear(pk->s1);
-	mpz_clear(pk->s2);
-	mpz_clear(pk->SK);
-	mpz_clear(pk->H);
+	for (int i = 0; i < S1; i++) {
+		mpz_clear(pk->B[i]);
+		mpz_clear(pk->c[i]);
+	}
 }
 
 
@@ -54,10 +54,10 @@ void fhe_pk_print(fhe_pk_t pk)
 	printf("public key:\n");
 	gmp_printf("\tp  =\t%Zd\n", pk->p);
 	gmp_printf("\tα  =\t%Zd\n", pk->alpha);
-	gmp_printf("\ts1 =\t%Zd\n", pk->s1);
-	gmp_printf("\ts2 =\t%Zd\n", pk->s2);
-	gmp_printf("\tSK =\t%Zd\n", pk->SK);
-	gmp_printf("\tH  =\t%Zd\n\n", pk->H);
+	printf("\tc[i]\tB[i]\n");
+	for (int i = 0; i < S1; i++) {
+		gmp_printf("\t%Zd\n\t\t%Zd\n", pk->c[i], pk->B[i]);
+	}
 }
 
 void fhe_sk_print(fhe_sk_t sk)
