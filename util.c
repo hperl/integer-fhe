@@ -9,7 +9,8 @@
 
 #include "util.h"
 
-void fmpz_poly_to_F_mpz_mod_poly(F_mpz_mod_poly_t out, fmpz_poly_t in)
+void
+fmpz_poly_to_F_mpz_mod_poly(F_mpz_mod_poly_t out, fmpz_poly_t in)
 {
 	mpz_poly_t mpz_poly;
 	mpz_poly_init(mpz_poly);
@@ -18,7 +19,8 @@ void fmpz_poly_to_F_mpz_mod_poly(F_mpz_mod_poly_t out, fmpz_poly_t in)
 	mpz_poly_clear(mpz_poly);
 }
 
-void fmpz_poly_rand_coeff_even(fmpz_poly_t poly, int n, ulong length, gmp_randstate_t* state)
+void
+fmpz_poly_rand_coeff_even(fmpz_poly_t poly, int n, ulong length, gmp_randstate_t* state)
 {
 	mpz_t c, exp_length_half;
 	mpz_init(c);
@@ -34,7 +36,8 @@ void fmpz_poly_rand_coeff_even(fmpz_poly_t poly, int n, ulong length, gmp_randst
 	}
 }
 
-int fmpz_probab_prime_p(fmpz_t n, int reps)
+int
+fmpz_probab_prime_p(fmpz_t n, int reps)
 {
 	int result;
 	mpz_t mpz;

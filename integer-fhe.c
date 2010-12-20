@@ -74,9 +74,9 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	
 	fmpz_t r = fmpz_init(fmpz_poly_resultant_bound(G, F)/FLINT_BITS + 2);
 
-	fmpz_poly_t Z, T;
+	fmpz_poly_t Z, t;
 	fmpz_poly_init(Z);
-	fmpz_poly_init(T);
+	fmpz_poly_init(t);
 	
 #ifdef DEBUG
 	printf("Executing XGCD with Polynomials G = ");
@@ -85,7 +85,7 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	fmpz_poly_print_pretty(F, "x");
 	printf("\n");
 #endif
-	fmpz_poly_xgcd(r, Z, T, G, F);
+	fmpz_poly_xgcd(r, Z, t, G, F);
 	
 #ifdef DEBUG
 	printf("r    = ");
@@ -173,12 +173,12 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 #endif
 
 	// cleanup
-	mpz_clear(R_i);
+	mpz_clear(B_i);
 	mpz_clear(r_plus);
 	mpz_clear(r_minus);
 	mpz_clear(temp);
 	fmpz_clear(fmpz_p);
-	fmpz_poly_clear(T);
+	fmpz_poly_clear(t);
 	fmpz_poly_clear(F);
 	fmpz_poly_clear(G);
 	F_mpz_mod_poly_clear(F_mod_p);
@@ -241,6 +241,7 @@ fhe_encrypt(mpz_t c, fhe_pk_t pk, int m)
 	fmpz_clear(alpha);
 }
 
+
 int
 fhe_decrypt(fhe_sk_t sk, mpz_t c)
 {
@@ -292,12 +293,14 @@ fhe_decrypt(fhe_sk_t sk, mpz_t c)
 	return m;
 }
 
+
 void
 fhe_add(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk)
 {
 	mpz_add(res, a, b);
 	mpz_mod(res, res, pk->p);
 }
+
 
 void
 fhe_mult(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk)
@@ -306,8 +309,133 @@ fhe_mult(mpz_t res, mpz_t a, mpz_t b, fhe_pk_t pk)
 	mpz_mod(res, res, pk->p);
 }
 
+
+void
+fhe_fulladd(mpz_t sum, mpz_t c_out, mpz_t a, mpz_t b, mpz_t c_in, fhe_pk_t pk)
+{
+	mpz_t temp;
+	mpz_init(temp);
+	
+	mpz_add(temp, a, b);
+	mpz_add(temp, temp, c_in);
+	mpz_mod(sum, temp, pk->p);
+	
+	mpz_mul(temp, a, b);
+	mpz_addmul(temp, c_in, a);
+	mpz_addmul(temp, c_in, b);
+	mpz_mod(c_out, temp, pk->p);
+	
+	mpz_clear(temp);
+}
+
+
+void
+fhe_halfadd(mpz_t sum, mpz_t c_out, mpz_t a, mpz_t b, fhe_pk_t pk)
+{
+	mpz_add(sum, a, b);
+	mpz_mod(sum, sum, pk->p);
+	
+	mpz_mul(c_out, a, b);
+	mpz_mod(c_out, c_out, pk->p);
+}
+
+
 void
 fhe_recrypt(mpz_t c, fhe_pk_t pk)
 {
+	assert(S <= T);
 	
+	mpz_t C[S1][T], H[T][T], temp, p;
+	mpq_t q;
+	for (int i = 0; i < S1; i++) {
+		for (int j = 0; j < T; j++) {
+			mpz_init(C[i][j]);
+		}
+	}
+	for (int i = 0; i < T; i++) {
+		for (int j = 0; j < T; j++) {
+			mpz_init_set_ui(H[i][j], 0);
+		}
+	}
+	
+	mpz_init(temp);
+	mpz_init(p);
+	mpq_init(q);
+	
+	
+	// Fill C-matrix
+	for (int i = 0; i < S1; i++) {
+		mpz_mul(temp, c, pk->B[i]);
+		mpz_mul_ui(p, pk->p, 2);
+		mpz_mod(temp, temp, p);
+		mpq_set_num(q, temp);
+		mpq_set_den(q, pk->p);
+		mpq_canonicalize(q);
+		double d = mpq_get_d(q);
+		
+		// base convert and encrypt d
+		for (int j = 0; j < T; j++) {
+			fhe_encrypt(C[i][j], pk, (int)d);
+			fhe_mult(C[i][j], C[i][j], pk->c[i], pk);
+			d -= (int)d;
+			d *= 2;
+		}
+	}
+	// Construct Hammingweight in H-matrix
+#define ham(_i,_j) H[_i][-_j+_i+S]	
+	for (int j = 0; j < T; j++) {
+		for (int i = 0; i < S1; i++) {
+			for (int k = (i<S)?i:S; k>2; k--) {
+				mpz_addmul(ham(k,j), ham(k,j), C[i][j]);
+				mpz_mod(ham(k,j), ham(k,j), pk->p);
+			}
+			mpz_add(ham(1,j), ham(1,j), C[i][j]);
+			mpz_mod(ham(1,j), ham(1,j), p);
+		}
+	}
+#undef ham
+	// merge rows 0 and 3; 1 and 4
+	for (int i = 0; i < 2; i++) {
+		for (int j = i; j < S; j++) {
+			mpz_set(H[i][S+j], H[3+i][S+j]);
+		}
+	}
+	// carry save adder of rows 0,1,2 --> 0,1 (columnwise)
+	for (int j = 0; j < T; j++) {
+		fhe_fulladd(H[0][j], H[2][j], H[0][j], H[1][j], H[2][j], pk);
+	}
+	// leftshift the row with the carry bits
+	for (int j = 0; j < T-1; j++) {
+		mpz_swap(H[1][j], H[2][j+1]);
+	}
+	
+	// ripple-carry-add rows 0 and 1 --> 0 (LSB at T-1)
+	// special cases: nothing to do for col T-1, halfadder for T-2
+	// note: carry is in temp
+	fhe_halfadd(H[0][T-2], temp, H[0][T-2], H[1][T-2], pk);
+	for (int j = T-3; j >= 0; j--) {
+		fhe_fulladd(H[0][j], temp, H[0][j], H[1][j], temp, pk);
+	}
+	
+	// round to nearest integer
+	mpz_add(temp, H[0][1], H[0][2]);
+	mpz_mod_ui(c, c, 2);
+	mpz_add(c, c, temp);
+	mpz_mod(c, c, pk->p);
+	
+	// cleanup
+	for (int i = 0; i < S1; i++) {
+		for (int j = 0; j < T; j++) {
+			mpz_clear(C[i][j]);
+		}
+	}
+	for (int i = 0; i < T; i++) {
+		for (int j = 0; j < T; j++) {
+			mpz_clear(H[i][j]);
+		}
+	}
+	
+	mpz_clear(temp);
+	mpz_clear(p);
+	mpq_clear(q);
 }
