@@ -9,6 +9,12 @@
 
 #include "util.h"
 
+int
+min(int a, int b)
+{
+	return (a<b) ? a : b;
+}
+
 void
 fmpz_poly_to_F_mpz_mod_poly(F_mpz_mod_poly_t out, fmpz_poly_t in)
 {

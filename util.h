@@ -15,6 +15,8 @@
 #include <libflint/fmpz_poly.h>
 #include <libflint/F_mpz_mod_poly.h>
 
+int min(int a, int b);
+
 void fmpz_poly_to_F_mpz_mod_poly(F_mpz_mod_poly_t out, fmpz_poly_t in);
 
 void fmpz_poly_rand_coeff_even(fmpz_poly_t poly, int n, ulong length, gmp_randstate_t* state);

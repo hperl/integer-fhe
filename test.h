@@ -15,8 +15,19 @@
 #include <assert.h>
 #include "integer-fhe.h"
 
-#define RUNS 2
+#define RUNS 10
+#define KEYRUNS 5
 
 void test_encryt_decrypt();
+
+void test_halfadd();
+
+void test_fulladd();
+
+void test_recrypt();
+
+void test_homomorphic();
+
+void test_suite();
 
 #endif

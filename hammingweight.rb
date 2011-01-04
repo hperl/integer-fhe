@@ -15,3 +15,5 @@ def symb_hamming(a)
   end
   result # !> `&' interpreted as argument prefix
 end
+
+puts symb_hamming([1,0,1,0,1])
