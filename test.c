@@ -205,6 +205,7 @@ test_homomorphic()
 {
 	printf("HOMOMORPHIC\n");
 	
+	int m;
 	mpz_t c0, c1, temp;
 	
 	mpz_init(c0);
@@ -229,21 +230,35 @@ test_homomorphic()
 		
 		fhe_keygen(pk, sk);
 		
+//		for (int j = 0; j < RUNS; j++) {
+//			fhe_encrypt(c0, pk, 0);
+//			fhe_encrypt(c1, pk, 1);
+//			
+//			ASSERT_HOMMUL(c0,c0,0);
+//			ASSERT_HOMMUL(c0,c1,0);
+//			ASSERT_HOMMUL(c1,c0,0);
+//			ASSERT_HOMMUL(c1,c1,1);
+//			printf("*"); fflush(stdout);
+//			
+//			ASSERT_HOMADD(c0,c0,0);
+//			ASSERT_HOMADD(c1,c0,1);
+//			ASSERT_HOMADD(c0,c1,1);
+//			ASSERT_HOMADD(c1,c1,0);
+//			printf("+"); fflush(stdout);
+//		}
+		fhe_encrypt(c0, pk, 0);
+		printf("\nadd-chain: ");
 		for (int j = 0; j < RUNS; j++) {
-			fhe_encrypt(c0, pk, 0);
-			fhe_encrypt(c1, pk, 1);
-			
-			ASSERT_HOMMUL(c0,c0,0);
-			ASSERT_HOMMUL(c0,c1,0);
-			ASSERT_HOMMUL(c1,c0,0);
-			ASSERT_HOMMUL(c1,c1,1);
-			printf("*"); fflush(stdout);
-			
-			ASSERT_HOMADD(c0,c0,0);
-			ASSERT_HOMADD(c1,c0,1);
-			ASSERT_HOMADD(c0,c1,1);
-			ASSERT_HOMADD(c1,c1,0);
-			printf("+"); fflush(stdout);
+			fhe_add(c0, c0, c0, pk);
+			m = fhe_decrypt(c0, sk);
+			printf("%i", m);
+		}
+		fhe_encrypt(c1, pk, 1);
+		printf("\nmul-chain: ");
+		for (int j = 0; j < RUNS; j++) {
+			fhe_mul(c1, c1, c1, pk);
+			m = fhe_decrypt(c1, sk);
+			printf("%i", m);
 		}
 		printf("\n");
 	}
@@ -257,21 +272,3 @@ test_homomorphic()
 	printf("PASSED.\n");
 }
 
-
-void
-fhe_check_hint(fhe_pk_t pk, fhe_sk_t sk)
-{
-	mpz_t sum;
-	mpz_init(sum);
-	
-	for (int i = 0; i < S1; i++) {
-		mpz_addmul_ui(sum, pk->B[i], fhe_decrypt(pk->c[i], sk));
-	}
-	
-	if (mpz_cmp(sk->B, sum) == 0) {
-		printf("hint is correct.\n");
-	} else {
-		printf("hint is WRONG!\n");
-	}
-
-}

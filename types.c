@@ -91,8 +91,3 @@ void fhe_sk_print_mathematica(fhe_sk_t sk)
 	printf("secret key:\n");
 	gmp_printf("{%Zd, %Zd}\n", sk->p, sk->B);
 }
-
-void mpz_print(mpz_t x)
-{
-	gmp_printf("%Zd\n", x);
-}

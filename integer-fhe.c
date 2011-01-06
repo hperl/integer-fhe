@@ -184,6 +184,8 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	mpz_clear(r_minus);
 	mpz_clear(temp);
 	fmpz_clear(fmpz_p);
+	fmpz_clear(r);
+	fmpz_poly_clear(Z);
 	fmpz_poly_clear(t);
 	fmpz_poly_clear(F);
 	fmpz_poly_clear(G);
@@ -191,6 +193,7 @@ fhe_keygen(fhe_pk_t pk, fhe_sk_t sk)
 	F_mpz_mod_poly_clear(G_mod_p);
 	F_mpz_mod_poly_clear(D_mod_p);
 	F_mpz_clear(P);
+	gmp_randclear(randstate);
 }
 
 void
@@ -234,6 +237,8 @@ fhe_encrypt(mpz_t c, fhe_pk_t pk, int m)
 #endif
 	
 	fmpz_to_mpz(c, fmpz_c);
+	fmpz_clear(fmpz_c);
+
 	mpz_mod(c, c, pk->p);
 	
 	
@@ -243,8 +248,8 @@ fhe_encrypt(mpz_t c, fhe_pk_t pk, int m)
 	
 	// cleanup
 	fmpz_poly_clear(C);
-	fmpz_clear(fmpz_c);
 	fmpz_clear(alpha);
+	gmp_randclear(randstate);
 }
 
 
@@ -381,13 +386,16 @@ fhe_recrypt(mpz_t c, fhe_pk_t pk)
 //#define DEBUG
 	assert(S <= T);
 	
-	
 #ifdef DEBUG
 	gmp_printf("c: %Zd\n\t= %i\n", c, fhe_decrypt(c, sk));
 #endif
 	
 	mpz_t C[S1][T], H[T][T], temp, p;
 	mpq_t q;
+	
+	mpz_init(temp);
+	mpz_init(p);
+	mpq_init(q);
 	for (int i = 0; i < S1; i++) {
 		for (int j = 0; j < T; j++) {
 			mpz_init(C[i][j]);
@@ -398,11 +406,6 @@ fhe_recrypt(mpz_t c, fhe_pk_t pk)
 			mpz_init_set_ui(H[i][j], 0);
 		}
 	}
-	
-	mpz_init(temp);
-	mpz_init(p);
-	mpq_init(q);
-	
 	
 	// Fill C-matrix
 	mpz_mul_ui(p, pk->p, 2);
