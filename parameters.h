@@ -14,7 +14,7 @@
 #define N 8
 #define MU 4
 //#define NU 2**256;
-#define LOG_NU 512
+#define LOG_NU 384
 #define S1 8
 #define S2 5
 #define T  5 // Ceiling[Log[2, S2]] + 2

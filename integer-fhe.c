@@ -211,11 +211,11 @@ fhe_encrypt(mpz_t c, fhe_pk_t pk, int m)
 	fmpz_t C_0, fmpz_c, alpha;
 	
 	fmpz_poly_init(C);
-	fmpz_c = fmpz_init(14351);
+	fmpz_c = fmpz_init(1000000);
 		
 	alpha = fmpz_init(mpz_size(pk->alpha));
 	mpz_to_fmpz(alpha, pk->alpha);
-	
+		
 	gmp_randstate_t randstate;
 	gmp_randinit_default(randstate);
 	gmp_randseed_ui(randstate, SEED);
@@ -224,6 +224,19 @@ fhe_encrypt(mpz_t c, fhe_pk_t pk, int m)
 	
 	C_0 = fmpz_poly_get_coeff_ptr(C, 0);
 	fmpz_add_ui(C_0, C_0, m);
+	
+	
+#ifdef DEBUG
+	printf("C(x) = ");
+	fmpz_poly_print_pretty(C, "x");
+	printf("\n");
+	printf("alpha = ");
+	fmpz_print(alpha);
+	printf("\n");
+	printf("C(alpha) = ");
+	fmpz_print(fmpz_c);
+	printf("\n");
+#endif
 	
 	fmpz_poly_evaluate(fmpz_c, C, alpha);
 	
@@ -383,12 +396,8 @@ fhe_halfadd(mpz_t sum, mpz_t c_out, mpz_t a, mpz_t b, fhe_pk_t pk)
 void
 fhe_recrypt(mpz_t c, fhe_pk_t pk)
 {
-//#define DEBUG
+#undef DEBUG
 	assert(S <= T);
-	
-#ifdef DEBUG
-	gmp_printf("c: %Zd\n\t= %i\n", c, fhe_decrypt(c, sk));
-#endif
 	
 	mpz_t C[S1][T], H[T][T], temp, p;
 	mpq_t q;
